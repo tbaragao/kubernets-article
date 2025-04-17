@@ -1,0 +1,10 @@
+apiVersion: "v1"
+kind: Pod
+metadata:
+  name: "poc-pipeline"
+  labels:
+    app: "poc-pipeline"
+spec:
+  containers:
+    - name: "poc-pipeline"
+      image: "tbaragao/poc-pipeline:latest"

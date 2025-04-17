@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: poc-pipeline-env
+data:
+  MyObject__Name: "Jorge o Estofador"
+  MyObject__Age: "79"

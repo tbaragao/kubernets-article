@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "poc-pipeline"
+  labels:
+    app: "poc-pipeline"
+spec:
+  selector:
+    matchLabels:
+      app: "poc-pipeline"
+  replicas: 3
+  template:
+    metadata:
+      name: "poc-pipeline"
+      labels:
+        app: "poc-pipeline"
+      annotations:
+        kubectl.kubernetes.io/restartedAt: $(date +%s)
+    spec:
+      containers:
+        - name : "poc-pipeline"
+          image: "tbaragao/poc-pipeline:v6.2"
+          envFrom:
+          - configMapRef:
+              name: poc-pipeline-env
+          - secretRef:
+              name: poc-pipeline-secret
+          volumeMounts:
+            - mountPath: "/app/Source"
+              name: config
+      volumes:
+        - name: config
+          configMap:
+            name: configmap-content
+            items:
+            - key: "fileContent"
+              path: "disclaimer.txt"

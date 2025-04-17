@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "poc-pipeline"
+  labels:
+    app: "poc-pipeline"
+spec:
+  selector:
+    matchLabels:
+      app: "poc-pipeline"
+  replicas: 3
+  template:
+    metadata:
+      name: "poc-pipeline"
+      labels:
+        app: "poc-pipeline"
+    spec:
+      containers:
+        - name : "poc-pipeline"
+          image: "tbaragao/poc-pipeline:v4"
+          envFrom:
+          - configMapRef:
+              name: poc-pipeline-env
+          # env:
+          #   - name: "MyObject__Name" # Para Dotnet precisa ser __ no lugar do . 
+          #     valueFrom:
+          #       configMapKeyRef:
+          #         name: poc-pipeline-env
+          #         key: MyObject__Name
+          #   - name: "MyObject__Age"
+          #     valueFrom:
+          #       configMapKeyRef:
+          #         name: poc-pipeline-env
+          #         key: MyObject__Age
