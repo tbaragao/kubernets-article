@@ -32,18 +32,19 @@ spec:
             timeoutSeconds: 1 # Timeout para considerar erro, lembrar que quando for integrada (consumir banco) precisa ser menos conservador
             successThreshold: 1 # Quantidade de testes que devem ser realizadas para considerar que está Ok
             initialDelaySeconds: 2 # aguarda 2 segundos até iniciar a verificar se o container já iniciou
-          # livenessProbe:
-          #   httpGet:
-          #     path: /healthz
-          #     port: 4100 #Porta do container não é a porta do service
-                # httpHeaders:
-                # - name: x-api-key
-                #   value: MyAwesomeApiKey
-          #   periodSeconds: 5 # De quanto em quanto tempo para verificar
-          #   failureThreshold: 3 # Limite de erros para reiniciar o container
-          #   timeoutSeconds: 1 # Timeout para considerar erro, lembrar que quando for integrada (consumir banco) precisa ser menos conservador
-          #   successThreshold: 1 # Quantidade de testes que devem ser realizadas para considerar que está Ok
-          #   initialDelaySeconds: 3 # Quanto tempo deve ser aguardado até iniciar os testes
+          
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 4100 #Porta do container não é a porta do service
+              httpHeaders:
+              - name: x-api-key
+                value: MyAwesomeApiKey
+            periodSeconds: 5 # De quanto em quanto tempo para verificar
+            failureThreshold: 3 # Limite de erros para reiniciar o container
+            timeoutSeconds: 1 # Timeout para considerar erro, lembrar que quando for integrada (consumir banco) precisa ser menos conservador
+            successThreshold: 1 # Quantidade de testes que devem ser realizadas para considerar que está Ok
+            initialDelaySeconds: 13 # Quanto tempo deve ser aguardado até iniciar os testes
 
           envFrom:
           - configMapRef:
