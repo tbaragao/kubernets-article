@@ -23,7 +23,7 @@ spec:
           readinessProbe:
             httpGet:
               path: /healthz
-              port: 4100 # Porta do container, não é a porta do serviço
+              port: 8080 # Porta do container, não é a porta do serviço
               httpHeaders:
               - name: x-api-key
                 value: MyAwesomeApiKey
@@ -36,7 +36,7 @@ spec:
           livenessProbe:
             httpGet:
               path: /healthz
-              port: 4100 #Porta do container não é a porta do service
+              port: 8080 #Porta do container não é a porta do service
               httpHeaders:
               - name: x-api-key
                 value: MyAwesomeApiKey

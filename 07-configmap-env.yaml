@@ -3,5 +3,5 @@ kind: ConfigMap
 metadata:
   name: poc-pipeline-env
 data:
-  MyObject__Name: "Jorge o Estofador"
-  MyObject__Age: "79"
+  MyObject__Name: "Thiago ConfigMap"
+  MyObject__Age: "39"

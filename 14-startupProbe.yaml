@@ -19,7 +19,33 @@ spec:
     spec:
       containers:
         - name : "poc-pipeline"
-          image: "tbaragao/poc-pipeline:v6.3"
+          image: "tbaragao/poc-pipeline:v6.4"
+
+          startupProbe:
+            httpGet:
+              path: /healthz
+              port: 8080 # Porta do container, não é a porta do serviço
+              httpHeaders:
+              - name: x-api-key
+                value: MyAwesomeApiKey
+            periodSeconds: 3
+            failureThreshold: 30 # Limite de erros para reiniciar o container
+            timeoutSeconds: 1 # Timeout para considerar erro, lembrar que quando for integrada (consumir banco) precisa ser menos conservador
+            successThreshold: 1 # Quantidade de testes que devem ser realizadas para considerar que está Ok
+            initialDelaySeconds: 1 # aguarda 2 segundos até iniciar a verificar se o container já iniciou
+
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: 8080 # Porta do container, não é a porta do serviço
+              httpHeaders:
+              - name: x-api-key
+                value: MyAwesomeApiKey
+            periodSeconds: 2
+            failureThreshold: 3 # Limite de erros para reiniciar o container
+            timeoutSeconds: 1 # Timeout para considerar erro, lembrar que quando for integrada (consumir banco) precisa ser menos conservador
+            successThreshold: 1 # Quantidade de testes que devem ser realizadas para considerar que está Ok
+          
           livenessProbe:
             httpGet:
               path: /healthz
@@ -31,7 +57,7 @@ spec:
             failureThreshold: 3 # Limite de erros para reiniciar o container
             timeoutSeconds: 1 # Timeout para considerar erro, lembrar que quando for integrada (consumir banco) precisa ser menos conservador
             successThreshold: 1 # Quantidade de testes que devem ser realizadas para considerar que está Ok
-            initialDelaySeconds: 3 # Quanto tempo deve ser aguardado até iniciar os testes
+
           envFrom:
           - configMapRef:
               name: poc-pipeline-env
